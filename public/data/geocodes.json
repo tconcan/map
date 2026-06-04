@@ -1,0 +1,842 @@
+{
+  "holliston, ma": {
+    "lat": 42.2000966,
+    "lng": -71.4245049,
+    "address": "Holliston, Massachusetts"
+  },
+  "el paso, tx": {
+    "lat": 31.7757794,
+    "lng": -106.5078652,
+    "address": "The University of Texas at El Paso, TX"
+  },
+  "needham, ma": {
+    "lat": 42.2802645,
+    "lng": -71.2360624,
+    "address": "Needham, Massachusetts"
+  },
+  "new york, ny": {
+    "lat": 40.7127281,
+    "lng": -74.0060152,
+    "address": "New York, New York"
+  },
+  "long island, ny": {
+    "lat": 40.8514971,
+    "lng": -73.0994297,
+    "address": "Long Island, New York"
+  },
+  "los angeles, ca": {
+    "lat": 34.0536909,
+    "lng": -118.242766,
+    "address": "Los Angeles, California"
+  },
+  "nashville, tn": {
+    "lat": 36.1622767,
+    "lng": -86.7742984,
+    "address": "Nashville, Tennessee"
+  },
+  "chicago, il": {
+    "lat": 41.8755616,
+    "lng": -87.6244212,
+    "address": "Chicago, Illinois"
+  },
+  "boston, ma": {
+    "lat": 42.3588336,
+    "lng": -71.0578303,
+    "address": "Boston, Massachusetts"
+  },
+  "louisville, ky": {
+    "lat": 38.2133224,
+    "lng": -85.7577075,
+    "address": "University of Louisville, KY"
+  },
+  "rochester, ny": {
+    "lat": 43.157285,
+    "lng": -77.615214,
+    "address": "Rochester, New York"
+  },
+  "maryland, md": {
+    "lat": 38.9904124,
+    "lng": -76.9438586,
+    "address": "University of Maryland, College Park, Maryland"
+  },
+  "cleveland, oh": {
+    "lat": 41.4996574,
+    "lng": -81.6936772,
+    "address": "Cleveland, Ohio"
+  },
+  "london, uk": {
+    "lat": 51.500021,
+    "lng": -0.192442,
+    "address": "Warner Music UK, England"
+  },
+  "fort wayne, in": {
+    "lat": 41.0799898,
+    "lng": -85.1386015,
+    "address": "Fort Wayne, Indiana"
+  },
+  "cambridge, ma": {
+    "lat": 42.3656347,
+    "lng": -71.1040018,
+    "address": "Cambridge, Massachusetts"
+  },
+  "the villages, fl": {
+    "lat": 28.8759024,
+    "lng": -81.984579,
+    "address": "The Villages, Florida"
+  },
+  "raliegh, nc": {
+    "lat": 35.9359869,
+    "lng": -75.7074947,
+    "address": "Fort Raliegh N High School, North Carolina"
+  },
+  "boca raton, fl": {
+    "lat": 26.3586885,
+    "lng": -80.0830984,
+    "address": "Boca Raton, Florida"
+  },
+  "marlborough, ma": {
+    "lat": 42.3468589,
+    "lng": -71.5525188,
+    "address": "Marlborough, Massachusetts"
+  },
+  "new jersey, nj": {
+    "lat": 40.7215682,
+    "lng": -74.047455,
+    "address": "Jersey City, New Jersey"
+  },
+  "salt lake city, ut": {
+    "lat": 40.7596198,
+    "lng": -111.886797,
+    "address": "Salt Lake City, Utah"
+  },
+  "bethesda, md": {
+    "lat": 38.9846816,
+    "lng": -77.0942447,
+    "address": "Bethesda, Maryland"
+  },
+  "fremont, ca": {
+    "lat": 37.5482697,
+    "lng": -121.988571,
+    "address": "Fremont, California"
+  },
+  "dallas, tx": {
+    "lat": 32.7762719,
+    "lng": -96.7968559,
+    "address": "Dallas, Texas"
+  },
+  "peru, in": {
+    "lat": 40.7537253,
+    "lng": -86.0690325,
+    "address": "Peru, Indiana"
+  },
+  "rhode island, ri": {
+    "lat": 41.8271038,
+    "lng": -71.4063901,
+    "address": "Rhode Island School of Design, Rhode Island"
+  },
+  "brown university, ri": {
+    "lat": 41.8186395,
+    "lng": -71.4088009,
+    "address": "Brown University, RI"
+  },
+  "myrtle beach, sc": {
+    "lat": 33.6956461,
+    "lng": -78.8900409,
+    "address": "Myrtle Beach, South Carolina"
+  },
+  "st. paul, mn": {
+    "lat": 44.9402711,
+    "lng": -93.1966117,
+    "address": "St. Paul Seminary, MN"
+  },
+  "richmond, va": {
+    "lat": 37.5385087,
+    "lng": -77.43428,
+    "address": "Richmond, Virginia"
+  },
+  "miami, fl": {
+    "lat": 25.7741566,
+    "lng": -80.1935973,
+    "address": "Miami, Florida"
+  },
+  "manhattan, ny": {
+    "lat": 40.8176657,
+    "lng": -73.9585144,
+    "address": "Columbia University, Manhattanville Campus, NY"
+  },
+  "westchester, ny": {
+    "lat": 41.1763139,
+    "lng": -73.7907554,
+    "address": "Westchester, New York"
+  },
+  "orange, nj": {
+    "lat": 40.7717821,
+    "lng": -74.233294,
+    "address": "Orange, NJ"
+  },
+  "palo alto, ca": {
+    "lat": 37.4443293,
+    "lng": -122.1598465,
+    "address": "Palo Alto, California"
+  },
+  "pittsburgh, pa": {
+    "lat": 40.444153,
+    "lng": -79.962461,
+    "address": "University of Pittsburgh, PA"
+  },
+  "mystic, ct": {
+    "lat": 41.3618311,
+    "lng": -71.9643827,
+    "address": "Mystic Seaport Marine Museum, CT"
+  },
+  "noblesville, in": {
+    "lat": 40.0460881,
+    "lng": -86.0139854,
+    "address": "Noblesville, Indiana"
+  },
+  "sunapee, nh": {
+    "lat": 43.3874615,
+    "lng": -72.0876516,
+    "address": "Sunapee, New Hampshire"
+  },
+  "florida, fl": {
+    "lat": 24.6736205,
+    "lng": -81.4981792,
+    "address": "Florida Keys, Florida"
+  },
+  "bucknell, pa": {
+    "lat": 40.9515356,
+    "lng": -76.8879603,
+    "address": "Bucknell University, Pennsylvania"
+  },
+  "clemson, sc": {
+    "lat": 34.6686916,
+    "lng": -82.8374348,
+    "address": "Clemson University, South Carolina"
+  },
+  "college park, md": {
+    "lat": 38.9904124,
+    "lng": -76.9438586,
+    "address": "University of Maryland, College Park, Maryland"
+  },
+  "st. louis, mo": {
+    "lat": 38.6472402,
+    "lng": -90.3084017,
+    "address": "Washington University in St. Louis, MO"
+  },
+  "libertyville, il": {
+    "lat": 42.2830786,
+    "lng": -87.9531303,
+    "address": "Libertyville, Illinois"
+  },
+  "milwaukee, il": {
+    "lat": 41.9198462,
+    "lng": -87.6923515,
+    "address": "North Milwaukee Avenue, Illinois"
+  },
+  "arlington heights, il": {
+    "lat": 42.0811563,
+    "lng": -87.9802164,
+    "address": "Arlington Heights, Illinois"
+  },
+  "milwaukee, wi": {
+    "lat": 43.0386475,
+    "lng": -87.9090751,
+    "address": "Milwaukee, Wisconsin"
+  },
+  "rochester, mi": {
+    "lat": 42.680588,
+    "lng": -83.1338214,
+    "address": "Rochester, Michigan"
+  },
+  "canton township, mi": {
+    "lat": 42.3076547,
+    "lng": -83.4868961,
+    "address": "Canton Charter Township, Michigan"
+  },
+  "detroit, mi": {
+    "lat": 42.3315509,
+    "lng": -83.0466403,
+    "address": "Detroit, Michigan"
+  },
+  "evansville, in": {
+    "lat": 37.970495,
+    "lng": -87.5715641,
+    "address": "Evansville, Indiana"
+  },
+  "west lafayette, in": {
+    "lat": 40.4258686,
+    "lng": -86.9080655,
+    "address": "West Lafayette, Indiana"
+  },
+  "hartford, ct": {
+    "lat": 41.764582,
+    "lng": -72.6908547,
+    "address": "Hartford, Connecticut"
+  },
+  "cupertino, ca": {
+    "lat": 37.3228934,
+    "lng": -122.0322895,
+    "address": "Cupertino, California"
+  },
+  "albany, ny": {
+    "lat": 42.6840271,
+    "lng": -73.8258773,
+    "address": "University at Albany, The State University of New York, NY"
+  },
+  "bloomfield, mi": {
+    "lat": 42.5684073,
+    "lng": -83.3740333,
+    "address": "West Bloomfield Charter Township, Michigan"
+  },
+  "crozet, va": {
+    "lat": 38.065017,
+    "lng": -78.690893,
+    "address": "Crozet, Virginia"
+  },
+  "peoria, il": {
+    "lat": 40.6938609,
+    "lng": -89.5891008,
+    "address": "Peoria, Illinois"
+  },
+  "ocean city, nj": {
+    "lat": 39.2788685,
+    "lng": -74.5762507,
+    "address": "Ocean City, New Jersey"
+  },
+  "seattle, wa": {
+    "lat": 47.6038321,
+    "lng": -122.330062,
+    "address": "Seattle, Washington"
+  },
+  "novi, mi": {
+    "lat": 42.48059,
+    "lng": -83.4754913,
+    "address": "Novi, Michigan"
+  },
+  "lafayette, ca": {
+    "lat": 37.8857582,
+    "lng": -122.1180201,
+    "address": "Lafayette, California"
+  },
+  "denver, co": {
+    "lat": 39.7392364,
+    "lng": -104.984862,
+    "address": "Denver, Colorado"
+  },
+  "fort collins, co": {
+    "lat": 40.5871782,
+    "lng": -105.0770113,
+    "address": "Fort Collins, Colorado"
+  },
+  "edwards, co": {
+    "lat": 39.6245455,
+    "lng": -106.6308566,
+    "address": "Edwards, Colorado"
+  },
+  "lake zurich, il": {
+    "lat": 42.1969689,
+    "lng": -88.0934108,
+    "address": "Lake Zurich, Illinois"
+  },
+  "ontario, canada": {
+    "lat": 50.000678,
+    "lng": -86.000977,
+    "address": "Ontario"
+  },
+  "washington, dc": {
+    "lat": 38.8950982,
+    "lng": -77.0363849,
+    "address": "Washington, District of Columbia"
+  },
+  "minneapolis, mn": {
+    "lat": 44.9772995,
+    "lng": -93.2654692,
+    "address": "Minneapolis, Minnesota"
+  },
+  "fishers, in": {
+    "lat": 39.9555928,
+    "lng": -86.0138729,
+    "address": "Fishers, Indiana"
+  },
+  "austin, tx": {
+    "lat": 30.2851494,
+    "lng": -97.7339352,
+    "address": "University of Texas at Austin, TX"
+  },
+  "san francisco, ca": {
+    "lat": 37.7879363,
+    "lng": -122.4075201,
+    "address": "San Francisco, California"
+  },
+  "carlsbad, ca": {
+    "lat": 33.1580933,
+    "lng": -117.3505966,
+    "address": "Carlsbad, California"
+  },
+  "cincinnati, oh": {
+    "lat": 39.1012809,
+    "lng": -84.5127405,
+    "address": "Cincinnati, Ohio"
+  },
+  "lebanon, nh": {
+    "lat": 43.643032,
+    "lng": -72.251587,
+    "address": "Lebanon, New Hampshire"
+  },
+  "charleston, sc": {
+    "lat": 32.7884363,
+    "lng": -79.9399309,
+    "address": "Charleston, South Carolina"
+  },
+  "minnetonka, mn": {
+    "lat": 44.9405086,
+    "lng": -93.4638936,
+    "address": "Minnetonka, Minnesota"
+  },
+  "greensburg, in": {
+    "lat": 39.3372722,
+    "lng": -85.483581,
+    "address": "Greensburg, Indiana"
+  },
+  "lawrence, in": {
+    "lat": 38.8400395,
+    "lng": -86.4880717,
+    "address": "Lawrence, Indiana"
+  },
+  "forest lane, tx": {
+    "lat": 32.9086392,
+    "lng": -96.7625606,
+    "address": "Forest Lane, Texas"
+  },
+  "simsbury, ct": {
+    "lat": 41.8759152,
+    "lng": -72.8012211,
+    "address": "Simsbury, Connecticut"
+  },
+  "new canaan, ct": {
+    "lat": 41.146763,
+    "lng": -73.4945668,
+    "address": "New Canaan Chamber of Commerce, CT"
+  },
+  "nashiville, tn": {
+    "lat": 36.1622767,
+    "lng": -86.7742984,
+    "address": "Nashville, Tennessee"
+  },
+  "providence, ri": {
+    "lat": 41.8239891,
+    "lng": -71.4128343,
+    "address": "Providence, Rhode Island"
+  },
+  "las vegas, nv": {
+    "lat": 36.1674263,
+    "lng": -115.1484131,
+    "address": "Las Vegas, Nevada"
+  },
+  "dubai, uae": {
+    "lat": 24.9866678,
+    "lng": 55.2076863,
+    "address": "UAE Flowers | Flower Delivery Dubai | Flowers, Cake, Plants, Perfume & Gifts Shop, إمارة دبي"
+  },
+  "sao palo, brazil": {
+    "lat": -22.0244826,
+    "lng": -47.875306,
+    "address": "Rua Professor Hério Palo, São Paulo"
+  },
+  "uc berkeley, ca": {
+    "lat": 37.8699246,
+    "lng": -122.2532943,
+    "address": "UC Berkeley School of Law, California"
+  },
+  "vancouver, canada": {
+    "lat": 49.2608724,
+    "lng": -123.113952,
+    "address": "Vancouver, British Columbia"
+  },
+  "san diego, ca": {
+    "lat": 32.7174202,
+    "lng": -117.162772,
+    "address": "San Diego, California"
+  },
+  "valparaiso, in": {
+    "lat": 41.4672552,
+    "lng": -87.0604487,
+    "address": "Valparaiso, Indiana"
+  },
+  "elk grove, ca": {
+    "lat": 38.4087993,
+    "lng": -121.3716178,
+    "address": "Elk Grove, California"
+  },
+  "ucla, ca": {
+    "lat": 34.0664551,
+    "lng": -118.4465189,
+    "address": "Ronald Reagan UCLA Medical Center, CA"
+  },
+  "west hartford, ct": {
+    "lat": 41.799161,
+    "lng": -72.7137661,
+    "address": "University of Hartford, CT"
+  },
+  "orlando, fl": {
+    "lat": 28.5421218,
+    "lng": -81.379045,
+    "address": "Orlando, Florida"
+  },
+  "mason, oh": {
+    "lat": 39.3600586,
+    "lng": -84.309939,
+    "address": "Mason, Ohio"
+  },
+  "tuscaloosa, al": {
+    "lat": 33.2095614,
+    "lng": -87.5675258,
+    "address": "Tuscaloosa, Alabama"
+  },
+  "broken arrow, ok": {
+    "lat": 36.0525993,
+    "lng": -95.7908195,
+    "address": "Broken Arrow, Oklahoma"
+  },
+  "georgia tech, ga": {
+    "lat": 33.7760948,
+    "lng": -84.3988077,
+    "address": "Georgia Tech, GA"
+  },
+  "montreal, canada": {
+    "lat": 45.4901295,
+    "lng": -73.5846809,
+    "address": "Montreal Forum, QC"
+  },
+  "phoenix, az": {
+    "lat": 33.4484367,
+    "lng": -112.074141,
+    "address": "Phoenix, Arizona"
+  },
+  "sammamish, wa": {
+    "lat": 47.6017554,
+    "lng": -122.0416844,
+    "address": "Sammamish, Washington"
+  },
+  "nigeria, africa": {
+    "lat": 8.4849377,
+    "lng": 4.5637292,
+    "address": "United Bank for Africa, Muritala Muhamed Way, Ilorin, Nigeria, Kwara"
+  },
+  "purdue university, in": {
+    "lat": 40.430028,
+    "lng": -86.9264211,
+    "address": "Purdue University, IN"
+  },
+  "atlanta, in": {
+    "lat": 33.7806025,
+    "lng": -84.3927616,
+    "address": "Alexander Memorial Coliseum in McCamish Pavilion, GA"
+  },
+  "maplewood, nj": {
+    "lat": 40.7312123,
+    "lng": -74.2734808,
+    "address": "Maplewood, New Jersey"
+  },
+  "connecticut, ct": {
+    "lat": 41.8119263,
+    "lng": -72.2647704,
+    "address": "University of Connecticut, CT"
+  },
+  "ohio state, oh": {
+    "lat": 40.7988105,
+    "lng": -82.5782294,
+    "address": "The Ohio State University at Mansfield, OH"
+  },
+  "chennai, india": {
+    "lat": 13.0836939,
+    "lng": 80.270186,
+    "address": "Chennai, Tamil Nadu"
+  },
+  "malvern, pa": {
+    "lat": 40.0269975,
+    "lng": -75.5122934,
+    "address": "Malvern Preparatory School, PA"
+  },
+  "new albany, oh": {
+    "lat": 40.0811745,
+    "lng": -82.8087864,
+    "address": "New Albany, Ohio"
+  },
+  "baltimore, md": {
+    "lat": 39.2908816,
+    "lng": -76.610759,
+    "address": "Baltimore, Maryland"
+  },
+  "lynchburg, va": {
+    "lat": 37.4137536,
+    "lng": -79.1422464,
+    "address": "Lynchburg, Virginia"
+  },
+  "philadelphia, pa": {
+    "lat": 39.9527237,
+    "lng": -75.1635262,
+    "address": "Philadelphia, Pennsylvania"
+  },
+  "madison, wi": {
+    "lat": 43.0802745,
+    "lng": -89.4309587,
+    "address": "University of Wisconsin-Madison, Wisconsin"
+  },
+  "carol stream, il": {
+    "lat": 41.9125286,
+    "lng": -88.1347927,
+    "address": "Carol Stream, Illinois"
+  },
+  "michigan, mi": {
+    "lat": 42.2942142,
+    "lng": -83.7100389,
+    "address": "University of Michigan, MI"
+  },
+  "san antonio, tx": {
+    "lat": 29.4246002,
+    "lng": -98.4951405,
+    "address": "San Antonio, Texas"
+  },
+  "copenhagen, denmark": {
+    "lat": 55.6867243,
+    "lng": 12.5700724,
+    "address": "København, Region Hovedstaden"
+  },
+  "roebling, nj": {
+    "lat": 40.1159169,
+    "lng": -74.7863614,
+    "address": "Roebling, New Jersey"
+  },
+  "corning, ny": {
+    "lat": 42.1497504,
+    "lng": -77.0541655,
+    "address": "Corning Museum of Glass, NY"
+  },
+  "springfield, ma": {
+    "lat": 42.1018764,
+    "lng": -72.5886727,
+    "address": "Springfield, MA"
+  },
+  "columbus, oh": {
+    "lat": 39.9622601,
+    "lng": -83.0007065,
+    "address": "Columbus, Ohio"
+  },
+  "delaware, de": {
+    "lat": 38.6920451,
+    "lng": -75.4013315,
+    "address": "Delaware"
+  },
+  "waukesha, wi": {
+    "lat": 43.0622536,
+    "lng": -88.3123889,
+    "address": "Waukesha, Wisconsin"
+  },
+  "buffalo, ny": {
+    "lat": 42.8864163,
+    "lng": -78.8781493,
+    "address": "Buffalo, New York"
+  },
+  "nj, nj": {
+    "lat": 40.0583,
+    "lng": -74.4057,
+    "address": "New Jersey, USA"
+  },
+  "lexington, ma": {
+    "lat": 42.4473175,
+    "lng": -71.2245003,
+    "address": "Lexington, Massachusetts"
+  },
+  "winetka, il": {
+    "lat": 42.1080703,
+    "lng": -87.7365286,
+    "address": "Winnetka, Illinois"
+  },
+  "portland, me": {
+    "lat": 43.6573605,
+    "lng": -70.2586618,
+    "address": "Portland, Maine"
+  },
+  "dorchester, ma": {
+    "lat": 42.2973205,
+    "lng": -71.0744952,
+    "address": "Dorchester, Massachusetts"
+  },
+  "columbus, in": {
+    "lat": 39.2014405,
+    "lng": -85.9213796,
+    "address": "Columbus, Indiana"
+  },
+  "clinton, ny": {
+    "lat": 44.6483438,
+    "lng": -73.4414286,
+    "address": "Clinton Community College, NY"
+  },
+  "novato, ca": {
+    "lat": 38.1061979,
+    "lng": -122.5681191,
+    "address": "Novato, California"
+  },
+  "kansas city, mo": {
+    "lat": 39.100105,
+    "lng": -94.5781416,
+    "address": "Kansas City, Missouri"
+  },
+  "ashburn, va": {
+    "lat": 39.0049709,
+    "lng": -77.4911968,
+    "address": "Ashburn, VA"
+  },
+  "bloomingdale, mi": {
+    "lat": 42.3828129,
+    "lng": -85.9569675,
+    "address": "Bloomingdale, Michigan"
+  },
+  "uruguay, uruguay": {
+    "lat": -32.8755548,
+    "lng": -56.0201525,
+    "address": "Uruguay"
+  },
+  "lake sunapee, nh": {
+    "lat": 43.3762498,
+    "lng": -72.0519722,
+    "address": "Lake Sunapee, New Hampshire"
+  },
+  "mt. washington, nh": {
+    "lat": 44.0508725,
+    "lng": -71.1108854,
+    "address": "Mt. Washington Valley Rec Path, New Hampshire"
+  },
+  "acadia national park, me": {
+    "lat": 44.3563115,
+    "lng": -68.2154787,
+    "address": "Acadia National Park, Maine"
+  },
+  "milton, nh": {
+    "lat": 43.4084975,
+    "lng": -70.9881092,
+    "address": "Milton, New Hampshire"
+  },
+  "niagra falls, ny": {
+    "lat": 43.0821783,
+    "lng": -79.0035091,
+    "address": "Blockfusion Niagra Falls, NY"
+  },
+  "toronto, on": {
+    "lat": 43.6534817,
+    "lng": -79.3839347,
+    "address": "Toronto, Ontario"
+  },
+  "indianapolis, in": {
+    "lat": 39.7683331,
+    "lng": -86.1583502,
+    "address": "Indianapolis, Indiana"
+  },
+  "memphis, tn": {
+    "lat": 35.1460249,
+    "lng": -90.0517638,
+    "address": "Memphis, Tennessee"
+  },
+  "st. louis, oh": {
+    "lat": 38.6270,
+    "lng": -90.1994,
+    "address": "St. Louis, Missouri, USA"
+  },
+  "little bighorn reservation, mt": {
+    "lat": 45.5653722,
+    "lng": -107.4276619,
+    "address": "Little Bighorn Battlefield National Monument, Montana"
+  },
+  "bozeman, mt": {
+    "lat": 45.6794293,
+    "lng": -111.044047,
+    "address": "Bozeman, Montana"
+  },
+  "yellowstone national park, wy": {
+    "lat": 44.6200885,
+    "lng": -110.5606893,
+    "address": "Yellowstone National Park, Wyoming"
+  },
+  "grand teton national park, wy": {
+    "lat": 43.8105668,
+    "lng": -110.6487948,
+    "address": "Grand Teton National Park, Wyoming"
+  },
+  "jackson, wy": {
+    "lat": 43.479965,
+    "lng": -110.761815,
+    "address": "Jackson, Wyoming"
+  },
+  "boise, id": {
+    "lat": 43.6166163,
+    "lng": -116.200886,
+    "address": "Boise, Idaho"
+  },
+  "olympic national park, wa": {
+    "lat": 47.7865324,
+    "lng": -123.5360503,
+    "address": "Olympic National Park, Washington"
+  },
+  "banff, ab": {
+    "lat": 51.1784,
+    "lng": -115.5708,
+    "address": "Banff, Alberta, Canada"
+  },
+  "calgary, ab": {
+    "lat": 51.1222604,
+    "lng": -114.013541,
+    "address": "Calgary International Airport, AB"
+  },
+  "glacier national park, mt": {
+    "lat": 48.6174862,
+    "lng": -113.7608851,
+    "address": "Glacier National Park, Montana"
+  },
+  "redwood national park, ca": {
+    "lat": 41.7680746,
+    "lng": -124.0505009,
+    "address": "Redwood National Park, California"
+  },
+  "yosemite national park, ca": {
+    "lat": 37.8393004,
+    "lng": -119.5164635,
+    "address": "Yosemite National Park, California"
+  },
+  "sequoia and kings canyon national parks, ca": {
+    "lat": 36.4958407,
+    "lng": -118.5599194,
+    "address": "Sequoia National Park, California, USA"
+  },
+  "death valley, ca": {
+    "lat": 36.4228722,
+    "lng": -116.913718,
+    "address": "Death Valley, California"
+  },
+  "tijuana, mexico": {
+    "lat": 32.5317397,
+    "lng": -117.019529,
+    "address": "Tijuana, Baja California"
+  },
+  "joshua tree national park, ca": {
+    "lat": 33.8970672,
+    "lng": -115.9511158,
+    "address": "Joshua Tree National Park, California"
+  },
+  "navajo nation, az": {
+    "lat": 35.6800566,
+    "lng": -109.0508223,
+    "address": "Navajo Nation Council Chamber, AZ"
+  },
+  "grand canyon national park, az": {
+    "lat": 36.3078548,
+    "lng": -112.292896,
+    "address": "Grand Canyon National Park, Arizona"
+  },
+  "hoover dam, nv": {
+    "lat": 36.0100111,
+    "lng": -114.7849709,
+    "address": "Hoover Dam Lodge, NV"
+  }
+}
