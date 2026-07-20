@@ -6,12 +6,15 @@ import type { GeocodeStats } from './utils/geocoding';
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [showPeople, setShowPeople] = useState(true);
+  const [showPasswordModal, setShowPasswordModal] = useState(false);
+  const [showPeople, setShowPeople] = useState(false);
   const [showRoutes, setShowRoutes] = useState(true);
+  const [showVisited, setShowVisited] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
   
   const [peopleCount, setPeopleCount] = useState(0);
   const [placesCount, setPlacesCount] = useState(0);
+  const [visitedCount, setVisitedCount] = useState(0);
   const [stats, setStats] = useState<GeocodeStats | null>(null);
   
   // Cache clearing signals
@@ -20,9 +23,11 @@ function App() {
 
   // Check initial authentication
   useEffect(() => {
-    if (sessionStorage.getItem('mapAuthenticated') === 'true') {
+    const isAuth = sessionStorage.getItem('mapAuthenticated') === 'true';
+    if (isAuth) {
       setIsAuthenticated(true);
     }
+    // Note: showPeople remains false by default on webpage reload!
   }, []);
 
   // Update statistics helper
@@ -38,20 +43,36 @@ function App() {
     setClearRouteSignal(prev => prev + 1);
   };
 
-  const handleDataLoaded = (peeps: number, places: number) => {
+  const handleDataLoaded = (peeps: number, places: number, visited: number) => {
     setPeopleCount(peeps);
     setPlacesCount(places);
+    setVisitedCount(visited);
   };
 
-  if (!isAuthenticated) {
-    return <PasswordPrompt onAuthenticated={() => setIsAuthenticated(true)} />;
-  }
+  const handleTogglePeople = (val: boolean) => {
+    if (val) {
+      if (isAuthenticated) {
+        setShowPeople(true);
+      } else {
+        setShowPasswordModal(true);
+      }
+    } else {
+      setShowPeople(false);
+    }
+  };
+
+  const handleAuthenticated = () => {
+    setIsAuthenticated(true);
+    setShowPeople(true);
+    setShowPasswordModal(false);
+  };
 
   return (
     <div style={styles.appContainer}>
       <MapContainer
-        showPeople={showPeople}
+        showPeople={showPeople && isAuthenticated}
         showRoutes={showRoutes}
+        showVisited={showVisited}
         searchQuery={searchQuery}
         onDataLoaded={handleDataLoaded}
         onStatsUpdated={handleStatsUpdated}
@@ -60,21 +81,34 @@ function App() {
       />
       
       <ControlPanel
-        showPeople={showPeople}
-        onTogglePeople={setShowPeople}
+        showPeople={showPeople && isAuthenticated}
+        onTogglePeople={handleTogglePeople}
         showRoutes={showRoutes}
         onToggleRoutes={setShowRoutes}
+        showVisited={showVisited}
+        onToggleVisited={setShowVisited}
         stats={stats}
         onClearGeocodeCache={handleClearGeocodeCache}
         onClearRouteCache={handleClearRouteCache}
         peopleCount={peopleCount}
         placesCount={placesCount}
+        visitedCount={visitedCount}
         searchQuery={searchQuery}
         onSearchQueryChange={setSearchQuery}
+        isAuthenticated={isAuthenticated}
+        onPromptPassword={() => setShowPasswordModal(true)}
       />
+
+      {showPasswordModal && (
+        <PasswordPrompt 
+          onAuthenticated={handleAuthenticated} 
+          onClose={() => setShowPasswordModal(false)}
+        />
+      )}
     </div>
   );
 }
+
 
 const styles: Record<string, React.CSSProperties> = {
   appContainer: {
@@ -87,3 +121,4 @@ const styles: Record<string, React.CSSProperties> = {
 };
 
 export default App;
+

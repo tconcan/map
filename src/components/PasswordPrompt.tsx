@@ -1,13 +1,14 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Lock, AlertCircle, Map } from 'lucide-react';
+import { Lock, AlertCircle, Users, X } from 'lucide-react';
 
 interface PasswordPromptProps {
   onAuthenticated: () => void;
+  onClose?: () => void;
 }
 
 const CORRECT_PASSWORD_HASH = 'df8a1593149056ff967f548883ba994fcf431e6dd4d2074223a454115d20cf84';
 
-export const PasswordPrompt: React.FC<PasswordPromptProps> = ({ onAuthenticated }) => {
+export const PasswordPrompt: React.FC<PasswordPromptProps> = ({ onAuthenticated, onClose }) => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -54,20 +55,35 @@ export const PasswordPrompt: React.FC<PasswordPromptProps> = ({ onAuthenticated 
   };
 
   return (
-    <div style={styles.container}>
+    <div style={styles.container} onClick={onClose}>
       {/* Animated background blobs */}
       <div style={styles.blob1} />
       <div style={styles.blob2} />
       
-      <div className="glass-panel" style={styles.card}>
+      <div 
+        className="glass-panel" 
+        style={styles.card}
+        onClick={(e) => e.stopPropagation()}
+      >
+        {onClose && (
+          <button 
+            onClick={onClose} 
+            style={styles.closeBtn} 
+            title="Cancel"
+            aria-label="Close password modal"
+          >
+            <X size={18} color="var(--text-secondary)" />
+          </button>
+        )}
+
         <div style={styles.logoContainer}>
           <div style={styles.logoCircle}>
-            <Map size={32} color="#a78bfa" />
+            <Users size={32} color="#a78bfa" />
           </div>
         </div>
         
-        <h2 style={styles.title}>Tucka Map</h2>
-        <p style={styles.subtitle}>Protected Dashboard</p>
+        <h2 style={styles.title}>Unlock People</h2>
+        <p style={styles.subtitle}>Enter access password to view people data</p>
 
         <form onSubmit={handleSubmit} style={styles.form}>
           <div style={styles.inputContainer}>
@@ -75,7 +91,7 @@ export const PasswordPrompt: React.FC<PasswordPromptProps> = ({ onAuthenticated 
             <input
               ref={inputRef}
               type="password"
-              placeholder="Enter Access Password"
+              placeholder="Enter Password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               disabled={isLoading}
@@ -100,7 +116,7 @@ export const PasswordPrompt: React.FC<PasswordPromptProps> = ({ onAuthenticated 
               cursor: isLoading || !password ? 'not-allowed' : 'pointer'
             }}
           >
-            {isLoading ? 'Verifying...' : 'Unlock Map'}
+            {isLoading ? 'Verifying...' : 'Unlock People Layer'}
           </button>
         </form>
       </div>
@@ -118,7 +134,9 @@ const styles: Record<string, React.CSSProperties> = {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    background: 'radial-gradient(circle at center, #1e1145 0%, #080516 100%)',
+    backgroundColor: 'rgba(8, 5, 22, 0.75)',
+    backdropFilter: 'blur(8px)',
+    WebkitBackdropFilter: 'blur(8px)',
     zIndex: 10000,
     overflow: 'hidden',
   },
@@ -143,6 +161,7 @@ const styles: Record<string, React.CSSProperties> = {
     pointerEvents: 'none',
   },
   card: {
+    position: 'relative',
     width: '90%',
     maxWidth: '400px',
     padding: '40px 32px',
@@ -150,10 +169,24 @@ const styles: Record<string, React.CSSProperties> = {
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    animation: 'scaleUp 0.5s cubic-bezier(0.16, 1, 0.3, 1)',
+    animation: 'scaleUp 0.3s cubic-bezier(0.16, 1, 0.3, 1)',
+  },
+  closeBtn: {
+    position: 'absolute',
+    top: '16px',
+    right: '16px',
+    background: 'transparent',
+    border: 'none',
+    cursor: 'pointer',
+    padding: '6px',
+    borderRadius: '50%',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    transition: 'background-color 0.2s',
   },
   logoContainer: {
-    marginBottom: '24px',
+    marginBottom: '20px',
   },
   logoCircle: {
     width: '64px',
@@ -168,7 +201,7 @@ const styles: Record<string, React.CSSProperties> = {
   },
   title: {
     fontFamily: 'var(--font-display)',
-    fontSize: '28px',
+    fontSize: '26px',
     fontWeight: 700,
     color: '#ffffff',
     letterSpacing: '-0.025em',
@@ -177,7 +210,7 @@ const styles: Record<string, React.CSSProperties> = {
   subtitle: {
     fontSize: '14px',
     color: 'var(--text-secondary)',
-    marginBottom: '32px',
+    marginBottom: '28px',
   },
   form: {
     width: '100%',
@@ -235,3 +268,4 @@ const styles: Record<string, React.CSSProperties> = {
     transition: 'all 0.2s',
   }
 };
+

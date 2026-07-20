@@ -3,7 +3,8 @@ import maplibregl from 'maplibre-gl';
 import 'maplibre-gl/dist/maplibre-gl.css';
 import { 
   parsePeopleCSV, 
-  parsePlacesCSV 
+  parsePlacesCSV,
+  parseVisitedCSV 
 } from '../utils/csvParser';
 import type { Person, Place } from '../utils/csvParser';
 import { 
@@ -36,8 +37,9 @@ function interpolateHexColor(color1: string, color2: string, factor: number): st
 interface MapContainerProps {
   showPeople: boolean;
   showRoutes: boolean;
+  showVisited: boolean;
   searchQuery: string;
-  onDataLoaded: (peopleCount: number, placesCount: number) => void;
+  onDataLoaded: (peopleCount: number, placesCount: number, visitedCount: number) => void;
   onStatsUpdated: (stats: GeocodeStats) => void;
   clearGeocodeSignal: number;
   clearRouteSignal: number;
@@ -46,6 +48,7 @@ interface MapContainerProps {
 export const MapContainer: React.FC<MapContainerProps> = ({
   showPeople,
   showRoutes,
+  showVisited,
   searchQuery,
   onDataLoaded,
   onStatsUpdated,
@@ -59,15 +62,20 @@ export const MapContainer: React.FC<MapContainerProps> = ({
   // Loaded raw datasets
   const [people, setPeople] = useState<Person[]>([]);
   const [places, setPlaces] = useState<Place[]>([]);
+  const [visited, setVisited] = useState<Place[]>([]);
   
   // Geocoded caches
   const [peopleCoords, setPeopleCoords] = useState<Map<string, { lat: number; lng: number }>>(new Map());
   const [placesCoords, setPlacesCoords] = useState<Place[]>([]);
+  const [visitedCoords, setVisitedCoords] = useState<Place[]>([]);
   
   // Map markers and routes tracking
   const peopleMarkersRef = useRef<maplibregl.Marker[]>([]);
   const placeMarkersRef = useRef<maplibregl.Marker[]>([]);
   const routeLayerIdsRef = useRef<string[]>([]);
+  
+  const visitedPlaceMarkersRef = useRef<maplibregl.Marker[]>([]);
+  const visitedRouteLayerIdsRef = useRef<string[]>([]);
   
   // Store grouping and coordinates locally to re-cluster on zoom/pan
   const locationGroupsRef = useRef<Map<string, Person[]>>(new Map());
@@ -76,21 +84,25 @@ export const MapContainer: React.FC<MapContainerProps> = ({
   useEffect(() => {
     const loadData = async () => {
       try {
-        const [peopleRes, placesRes] = await Promise.all([
+        const [peopleRes, placesRes, visitedRes] = await Promise.all([
           fetch('/data/people.csv'),
-          fetch('/data/places.csv')
+          fetch('/data/places.csv'),
+          fetch('/data/visited.csv').catch(() => null)
         ]);
         
         const peopleText = await peopleRes.text();
         const placesText = await placesRes.text();
+        const visitedText = visitedRes && visitedRes.ok ? await visitedRes.text() : '';
         
         const parsedPeople = parsePeopleCSV(peopleText);
         const parsedPlaces = parsePlacesCSV(placesText);
+        const parsedVisited = visitedText ? parseVisitedCSV(visitedText) : [];
         
         setPeople(parsedPeople);
         setPlaces(parsedPlaces);
+        setVisited(parsedVisited);
         
-        onDataLoaded(parsedPeople.length, parsedPlaces.length);
+        onDataLoaded(parsedPeople.length, parsedPlaces.length, parsedVisited.length);
         
         // Seed cache from static json if available
         const geocodesRes = await fetch('/data/geocodes.json').catch(() => null);
@@ -140,9 +152,32 @@ export const MapContainer: React.FC<MapContainerProps> = ({
     if (clearRouteSignal > 0) {
       const clearRoute = async () => {
         await routeCache.clear();
-        // Redraw route if map is ready
-        if (mapRef.current && placesCoords.length > 0) {
-          drawRoutesAndPlaces(mapRef.current, placesCoords);
+        // Redraw routes if map is ready
+        if (mapRef.current) {
+          if (placesCoords.length > 0) {
+            drawRoutePathAndPlaces(
+              mapRef.current,
+              placesCoords,
+              routeLayerIdsRef,
+              placeMarkersRef,
+              '#3b82f6',
+              '#f43f5e',
+              showRoutes,
+              'planned'
+            );
+          }
+          if (visitedCoords.length > 0) {
+            drawRoutePathAndPlaces(
+              mapRef.current,
+              visitedCoords,
+              visitedRouteLayerIdsRef,
+              visitedPlaceMarkersRef,
+              '#facc15',
+              '#84cc16',
+              showVisited,
+              'visited'
+            );
+          }
         }
       };
       clearRoute();
@@ -195,7 +230,7 @@ export const MapContainer: React.FC<MapContainerProps> = ({
     };
   }, []);
 
-  // 4. Geocode Places and draw Routes
+  // 4. Geocode Places and draw Planned Routes
   useEffect(() => {
     const map = mapRef.current;
     if (!map || places.length === 0) return;
@@ -216,10 +251,21 @@ export const MapContainer: React.FC<MapContainerProps> = ({
       
       setPlacesCoords(coordsList);
       
+      const render = () => drawRoutePathAndPlaces(
+        map, 
+        coordsList, 
+        routeLayerIdsRef, 
+        placeMarkersRef, 
+        '#3b82f6', 
+        '#f43f5e', 
+        showRoutes, 
+        'planned'
+      );
+
       if (map.isStyleLoaded()) {
-        drawRoutesAndPlaces(map, coordsList);
+        render();
       } else {
-        map.once('load', () => drawRoutesAndPlaces(map, coordsList));
+        map.once('load', render);
       }
       
       const currentStats = await getStats();
@@ -228,6 +274,51 @@ export const MapContainer: React.FC<MapContainerProps> = ({
     
     processPlaces();
   }, [places]);
+
+  // 4b. Geocode Visited Places and draw Visited Routes (Yellow-Limegreen Gradient)
+  useEffect(() => {
+    const map = mapRef.current;
+    if (!map || visited.length === 0) return;
+    
+    const processVisited = async () => {
+      const coordsList: Place[] = [];
+      
+      for (const place of visited) {
+        const coords = await geocodeAddress(place.location);
+        if (coords) {
+          coordsList.push({
+            ...place,
+            lat: coords.lat,
+            lng: coords.lng
+          });
+        }
+      }
+      
+      setVisitedCoords(coordsList);
+      
+      const render = () => drawRoutePathAndPlaces(
+        map, 
+        coordsList, 
+        visitedRouteLayerIdsRef, 
+        visitedPlaceMarkersRef, 
+        '#facc15', 
+        '#84cc16', 
+        showVisited, 
+        'visited'
+      );
+
+      if (map.isStyleLoaded()) {
+        render();
+      } else {
+        map.once('load', render);
+      }
+      
+      const currentStats = await getStats();
+      onStatsUpdated(currentStats);
+    };
+    
+    processVisited();
+  }, [visited]);
 
   // 5. Geocode People Locations
   useEffect(() => {
@@ -258,13 +349,7 @@ export const MapContainer: React.FC<MapContainerProps> = ({
     processPeople();
   }, [people]);
 
-  // 6. Cluster and render People Markers when:
-  // - map loads
-  // - people data changes
-  // - coordinates map changes
-  // - search query changes (filters people!)
-  // - map zooms or pans (updates screen-space coordinates)
-  // - map resizes
+  // 6. Cluster and render People Markers
   useEffect(() => {
     const map = mapRef.current;
     if (!map || people.length === 0 || peopleCoords.size === 0) return;
@@ -301,7 +386,6 @@ export const MapContainer: React.FC<MapContainerProps> = ({
       if (timerId) window.clearTimeout(timerId);
     };
   }, [people, peopleCoords, searchQuery]);
-
   // 7. Toggle visibility of layers dynamically
   useEffect(() => {
     // Toggle People Markers
@@ -315,7 +399,7 @@ export const MapContainer: React.FC<MapContainerProps> = ({
     const map = mapRef.current;
     if (!map) return;
     
-    // Toggle Route Layers
+    // Toggle Planned Route Layers
     routeLayerIdsRef.current.forEach(layerId => {
       try {
         if (map.getLayer(layerId)) {
@@ -326,28 +410,73 @@ export const MapContainer: React.FC<MapContainerProps> = ({
       }
     });
     
-    // Toggle Place Markers
+    // Toggle Planned Place Markers
     placeMarkersRef.current.forEach(marker => {
       const el = marker.getElement();
       el.style.display = showRoutes ? '' : 'none';
     });
+
+    ensureVisitedOnTop(map);
   }, [showRoutes]);
 
-  // DRAW ROUTES AND PLACE MARKERS
-  const drawRoutesAndPlaces = async (map: maplibregl.Map, coordsList: Place[]) => {
+  useEffect(() => {
+    const map = mapRef.current;
+    if (!map) return;
+    
+    // Toggle Visited Route Layers
+    visitedRouteLayerIdsRef.current.forEach(layerId => {
+      try {
+        if (map.getLayer(layerId)) {
+          map.setLayoutProperty(layerId, 'visibility', showVisited ? 'visible' : 'none');
+        }
+      } catch (e) {
+        // Ignored
+      }
+    });
+    
+    // Toggle Visited Place Markers
+    visitedPlaceMarkersRef.current.forEach(marker => {
+      const el = marker.getElement();
+      el.style.display = showVisited ? '' : 'none';
+    });
+
+    ensureVisitedOnTop(map);
+  }, [showVisited]);
+
+  const ensureVisitedOnTop = (map: maplibregl.Map) => {
+    visitedRouteLayerIdsRef.current.forEach(layerId => {
+      try {
+        if (map.getLayer(layerId)) {
+          map.moveLayer(layerId);
+        }
+      } catch (e) {}
+    });
+  };
+
+  // DRAW ROUTES AND PLACE MARKERS (REUSABLE FOR PLANNED AND VISITED)
+  const drawRoutePathAndPlaces = async (
+    map: maplibregl.Map, 
+    coordsList: Place[],
+    layerIdsRef: React.MutableRefObject<string[]>,
+    markersRef: React.MutableRefObject<maplibregl.Marker[]>,
+    colorStart: string,
+    colorEnd: string,
+    isVisible: boolean,
+    tag: string
+  ) => {
     // 1. Clear previous layers
-    routeLayerIdsRef.current.forEach(layerId => {
+    layerIdsRef.current.forEach(layerId => {
       try {
         if (map.getLayer(layerId)) map.removeLayer(layerId);
-        const sourceId = layerId.replace('route-layer-', 'route-');
+        const sourceId = layerId.replace(`${tag}-layer-`, `${tag}-source-`);
         if (map.getSource(sourceId)) map.removeSource(sourceId);
       } catch (e) {}
     });
-    routeLayerIdsRef.current = [];
+    layerIdsRef.current = [];
     
     // 2. Clear previous place markers
-    placeMarkersRef.current.forEach(m => m.remove());
-    placeMarkersRef.current = [];
+    markersRef.current.forEach(m => m.remove());
+    markersRef.current = [];
 
     // 3. Draw routes between consecutive places
     const totalSegments = coordsList.length - 1;
@@ -383,8 +512,9 @@ export const MapContainer: React.FC<MapContainerProps> = ({
     });
 
     if (combinedCoords.length >= 2) {
-      const sourceId = `route-${Date.now()}`;
-      const layerId = `route-layer-${Date.now()}`;
+      const uniqueId = Date.now() + '-' + Math.random().toString(36).substring(2, 6);
+      const sourceId = `${tag}-source-${uniqueId}`;
+      const layerId = `${tag}-layer-${uniqueId}`;
       
       try {
         map.addSource(sourceId, {
@@ -412,53 +542,59 @@ export const MapContainer: React.FC<MapContainerProps> = ({
               'interpolate',
               ['linear'],
               ['zoom'],
-              3, 6,    // 6px wide at zoom 3 (zoomed out)
-              10, 14   // 14px wide at zoom 10 (zoomed in)
+              3, tag === 'planned' ? 13 : 6,
+              10, tag === 'planned' ? 22 : 11
             ],
             'line-gradient': [
               'interpolate',
               ['linear'],
               ['line-progress'],
-              0, '#3b82f6', // Royal Blue
-              1, '#f43f5e'  // Neon Rose
+              0, colorStart,
+              1, colorEnd
             ],
-            'line-opacity': 0.85
+            'line-opacity': tag === 'visited' ? 0.98 : 0.85
           }
         });
         
-        routeLayerIdsRef.current.push(layerId);
+        layerIdsRef.current.push(layerId);
         
-        // Hide if routes toggle is unchecked
-        if (!showRoutes) {
+        // ALWAYS re-enforce that Visited (yellow) route is at the very top of all layers
+        ensureVisitedOnTop(map);
+
+        if (!isVisible) {
           map.setLayoutProperty(layerId, 'visibility', 'none');
         }
       } catch (e) {
-        console.error('Error rendering combined route layer:', e);
+        console.error(`Error rendering ${tag} route layer:`, e);
       }
     }
     
-    // 4. Add small dot markers for places
+    // 4. Add dot markers for places
     coordsList.forEach((place, idx) => {
       const markerEl = document.createElement('div');
       
-      // Interpolate place marker color to match the route line gradient
       const factor = coordsList.length > 1 ? idx / (coordsList.length - 1) : 0;
-      const stopColor = interpolateHexColor('#3b82f6', '#f43f5e', factor);
+      const stopColor = interpolateHexColor(colorStart, colorEnd, factor);
+      
+      const isVisited = tag === 'visited';
+      const size = 12;
       
       markerEl.style.cssText = `
-        width: 12px;
-        height: 12px;
+        width: ${size}px;
+        height: ${size}px;
         border-radius: 50%;
         background-color: ${stopColor};
         border: 2px solid white;
-        box-shadow: 0 0 12px ${hexToRgba(stopColor, 0.6)};
+        box-shadow: 0 0 8px ${hexToRgba(stopColor, 0.6)};
         cursor: pointer;
-        display: ${showRoutes ? '' : 'none'};
+        display: ${isVisible ? '' : 'none'};
+        z-index: ${isVisited ? '100' : '10'};
       `;
       
       const popupContent = `
         <div style="padding: 4px; max-width: 220px; font-family: var(--font-primary);">
           <strong style="font-size: 14px; color: #ffffff; display: block; margin-bottom: 4px;">${place.location}</strong>
+          ${isVisited ? `<div style="font-size: 11px; color: #facc15; font-weight: 700; margin-bottom: 4px;">✓ Visited Stop #${idx + 1}</div>` : `<div style="font-size: 11px; color: #60a5fa; font-weight: 600; margin-bottom: 4px;">📍 Planned Stop #${idx + 1}</div>`}
           ${place.date ? `<div style="font-size: 12px; color: var(--text-secondary); margin-bottom: 2px;">Stop Date: ${place.date}</div>` : ''}
           ${place.days ? `<div style="font-size: 12px; color: var(--text-secondary); margin-bottom: 2px;">Duration: ${place.days} days</div>` : ''}
           ${place.notes ? `<div style="font-size: 11px; color: var(--text-muted); border-top: 1px dashed rgba(255,255,255,0.1); padding-top: 4px; margin-top: 4px;">${place.notes}</div>` : ''}
@@ -479,7 +615,7 @@ export const MapContainer: React.FC<MapContainerProps> = ({
         }
       });
         
-      placeMarkersRef.current.push(marker);
+      markersRef.current.push(marker);
     });
   };
 

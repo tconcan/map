@@ -122,3 +122,25 @@ export function parsePlacesCSV(csvText: string): Place[] {
   
   return places;
 }
+
+export function parseVisitedCSV(csvText: string): Place[] {
+  const lines = csvText.trim().split('\n');
+  const places: Place[] = [];
+  
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i].trim();
+    if (!line) continue;
+    
+    places.push({
+      location: line,
+      city: line.split(',')[0]?.trim() || line,
+      state: line.split(',')[1]?.trim() || '',
+      date: '',
+      days: '',
+      notes: 'Visited Location'
+    });
+  }
+  
+  return places;
+}
+

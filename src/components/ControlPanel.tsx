@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Layers, Database, BarChart3, Trash2, Search, Users, MapPin, Check, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Layers, Database, BarChart3, Trash2, Search, Users, MapPin, Check, ChevronLeft, ChevronRight, Lock, CheckCircle2 } from 'lucide-react';
 import type { GeocodeStats } from '../utils/geocoding';
 
 interface ControlPanelProps {
@@ -7,13 +7,18 @@ interface ControlPanelProps {
   onTogglePeople: (val: boolean) => void;
   showRoutes: boolean;
   onToggleRoutes: (val: boolean) => void;
+  showVisited: boolean;
+  onToggleVisited: (val: boolean) => void;
   stats: GeocodeStats | null;
   onClearGeocodeCache: () => Promise<void>;
   onClearRouteCache: () => Promise<void>;
   peopleCount: number;
   placesCount: number;
+  visitedCount: number;
   searchQuery: string;
   onSearchQueryChange: (query: string) => void;
+  isAuthenticated: boolean;
+  onPromptPassword: () => void;
 }
 
 type TabType = 'layers' | 'stats' | 'cache';
@@ -23,13 +28,18 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({
   onTogglePeople,
   showRoutes,
   onToggleRoutes,
+  showVisited,
+  onToggleVisited,
   stats,
   onClearGeocodeCache,
   onClearRouteCache,
   peopleCount,
   placesCount,
+  visitedCount,
   searchQuery,
   onSearchQueryChange,
+  isAuthenticated,
+  onPromptPassword,
 }) => {
   const [activeTab, setActiveTab] = useState<TabType>('layers');
   const [isCollapsed, setIsCollapsed] = useState(false);
@@ -131,16 +141,27 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({
                 <label style={styles.checkboxLabel}>
                   <input
                     type="checkbox"
-                    checked={showPeople}
-                    onChange={(e) => onTogglePeople(e.target.checked)}
+                    checked={showVisited}
+                    onChange={(e) => onToggleVisited(e.target.checked)}
                     style={styles.checkbox}
                   />
                   <div style={styles.checkboxTextContainer}>
-                    <span style={styles.checkboxTitle}>Show People</span>
-                    <span style={styles.checkboxDesc}>{peopleCount} people loaded</span>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                      <span style={styles.checkboxTitle}>Show Visited Route</span>
+                      <span style={{
+                        fontSize: '9px',
+                        fontWeight: 700,
+                        padding: '1px 5px',
+                        borderRadius: '4px',
+                        background: 'linear-gradient(90deg, #facc15 0%, #84cc16 100%)',
+                        color: '#0f0a24',
+                        letterSpacing: '0.02em'
+                      }}>Yellow➔Lime</span>
+                    </div>
+                    <span style={styles.checkboxDesc}>{visitedCount} visited locations</span>
                   </div>
                 </label>
-                
+
                 <label style={styles.checkboxLabel}>
                   <input
                     type="checkbox"
@@ -149,15 +170,52 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({
                     style={styles.checkbox}
                   />
                   <div style={styles.checkboxTextContainer}>
-                    <span style={styles.checkboxTitle}>Show Routes</span>
-                    <span style={styles.checkboxDesc}>{placesCount} locations plotted</span>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                      <span style={styles.checkboxTitle}>Show Planned Route</span>
+                      <span style={{
+                        fontSize: '9px',
+                        fontWeight: 700,
+                        padding: '1px 5px',
+                        borderRadius: '4px',
+                        background: 'linear-gradient(90deg, #3b82f6 0%, #f43f5e 100%)',
+                        color: '#ffffff',
+                        letterSpacing: '0.02em'
+                      }}>Blue➔Rose</span>
+                    </div>
+                    <span style={styles.checkboxDesc}>{placesCount} planned stops</span>
+                  </div>
+                </label>
+
+                <label style={styles.checkboxLabel}>
+                  <input
+                    type="checkbox"
+                    checked={showPeople}
+                    onChange={(e) => {
+                      if (!isAuthenticated) {
+                        onPromptPassword();
+                      } else {
+                        onTogglePeople(e.target.checked);
+                      }
+                    }}
+                    style={styles.checkbox}
+                  />
+                  <div style={styles.checkboxTextContainer}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                      <span style={styles.checkboxTitle}>Show People</span>
+                      {!isAuthenticated && <Lock size={13} color="#a78bfa" style={{ flexShrink: 0 }} />}
+                    </div>
+                    <span style={styles.checkboxDesc}>
+                      {isAuthenticated 
+                        ? `${peopleCount} people loaded` 
+                        : 'Password protected (click to unlock)'}
+                    </span>
                   </div>
                 </label>
               </div>
             </div>
 
             {/* People Search */}
-            {showPeople && (
+            {showPeople && isAuthenticated && (
               <div style={styles.section}>
                 <h4 style={styles.sectionTitle}>Filter People</h4>
                 <div style={styles.searchContainer}>
@@ -291,18 +349,41 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({
       
       {/* Quick Summary Footer */}
       <div style={styles.footer}>
-        <div style={styles.footerItem}>
-          <Users size={14} color="var(--primary)" />
-          <span>{peopleCount} People</span>
+        <div 
+          style={{
+            ...styles.footerItem,
+            cursor: !isAuthenticated ? 'pointer' : 'default'
+          }}
+          onClick={() => {
+            if (!isAuthenticated) onPromptPassword();
+          }}
+          title={!isAuthenticated ? 'Click to unlock People layer' : undefined}
+        >
+          {isAuthenticated ? (
+            <>
+              <Users size={13} color="var(--primary)" />
+              <span>{peopleCount} People</span>
+            </>
+          ) : (
+            <>
+              <Lock size={13} color="#a78bfa" />
+              <span style={{ color: '#a78bfa' }}>People (Locked)</span>
+            </>
+          )}
         </div>
         <div style={styles.footerItem}>
-          <MapPin size={14} color="var(--accent)" />
-          <span>{placesCount} Route Stops</span>
+          <CheckCircle2 size={13} color="#84cc16" />
+          <span>{visitedCount} Visited</span>
+        </div>
+        <div style={styles.footerItem}>
+          <MapPin size={13} color="var(--accent)" />
+          <span>{placesCount} Planned</span>
         </div>
       </div>
     </div>
   );
 };
+
 
 const styles: Record<string, React.CSSProperties> = {
   panel: {
